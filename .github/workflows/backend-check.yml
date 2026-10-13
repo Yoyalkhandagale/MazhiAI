@@ -1,0 +1,30 @@
+name: Mazhi AI backend checks
+
+on:
+  push:
+    paths:
+      - 'backend-template/**'
+      - '.github/workflows/backend-check.yml'
+  pull_request:
+    paths:
+      - 'backend-template/**'
+      - '.github/workflows/backend-check.yml'
+  workflow_dispatch:
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-template
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: node --check server.mjs
+      - name: Run backend smoke tests
+        run: npm test

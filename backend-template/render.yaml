@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: mazhi-ai-backend
+    runtime: node
+    plan: free
+    rootDir: backend-template
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: AI_PROVIDER_API_KEY
+        sync: false
+      - key: AI_API_URL
+        value: https://api.openai.com/v1/chat/completions
+      - key: AI_MODEL
+        value: gpt-4o-mini
+      - key: RATE_LIMIT_MAX
+        value: "20"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "60000"
+      - key: PROVIDER_TIMEOUT_MS
+        value: "30000"
